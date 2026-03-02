@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nestara — Find Your Perfect Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1a3260;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --gold: #f59e0b;
+    --cream: #fdf8f3;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--navy);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    text-decoration: none; color: var(--gray-600);
+    font-size: 0.92rem; font-weight: 500;
+    padding: 8px 14px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); background: var(--gray-100); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .btn-ghost {
+    background: none; border: 1.5px solid var(--gray-200);
+    color: var(--navy); padding: 8px 20px;
+    border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--navy); }
+  .btn-primary {
+    background: var(--navy); color: white;
+    border: none; padding: 9px 22px;
+    border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    margin-top: 68px;
+    min-height: 88vh;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e4080 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-circles {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13,148,136,0.15) 0%, transparent 70%);
+    right: -100px; top: -100px;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    padding: 0 5%; max-width: 800px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--gold);
+    padding: 6px 14px; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 600;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: white; line-height: 1.15;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .hero-title span { color: var(--teal-light); font-style: italic; }
+  .hero-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.1rem; font-weight: 300;
+    margin-bottom: 40px; line-height: 1.7;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  /* SEARCH BAR */
+  .search-container {
+    background: white;
+    border-radius: 16px;
+    padding: 8px;
+    display: flex; gap: 8px; align-items: center;
+    box-shadow: var(--shadow-lg);
+    animation: fadeUp 0.6s ease 0.3s both;
+    flex-wrap: wrap;
+  }
+  .search-tabs {
+    display: flex; gap: 4px;
+    background: var(--gray-100);
+    border-radius: 10px; padding: 4px;
+    margin-bottom: 8px; width: 100%;
+  }
+  .search-tab {
+    flex: 1; padding: 8px; text-align: center;
+    border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+    color: var(--gray-600); cursor: pointer;
+    transition: all 0.2s; border: none; background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .search-tab.active {
+    background: white; color: var(--navy);
+    box-shadow: var(--shadow-sm);
+  }
+  .search-input-wrap {
+    flex: 1; display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    border: 1.5px solid var(--gray-200); border-radius: 10px;
+    min-width: 200px;
+  }
+  .search-input-wrap svg { color: var(--gray-400); flex-shrink: 0; }
+  .search-input-wrap input {
+    border: none; outline: none; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; color: var(--gray-800); width: 100%;
+    background: transparent;
+  }
+  .search-input-wrap input::placeholder { color: var(--gray-400); }
+  .search-select {
+    padding: 10px 14px; border: 1.5px solid var(--gray-200);
+    border-radius: 10px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; color: var(--gray-700);
+    background: white; cursor: pointer; outline: none;
+  }
+  .btn-search {
+    background: var(--teal); color: white;
+    border: none; padding: 13px 30px;
+    border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-search:hover { background: #0c8278; transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 36px;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+  .stat { color: white; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--teal-light);
+  }
+  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 90px 5%; }
+  .section-header { text-align: center; margin-bottom: 56px; }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--navy); margin-bottom: 14px;
+  }
+  .section-sub { color: var(--gray-600); font-size: 1.05rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  /* FILTER PANEL */
+  .listings-section { background: var(--gray-50); }
+  .listings-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; }
+  .filter-panel {
+    background: white; border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow-sm);
+    height: fit-content; position: sticky; top: 90px;
+  }
+  .filter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--navy); margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .filter-title button {
+    font-size: 0.8rem; color: var(--teal); background: none; border: none;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-group { margin-bottom: 28px; }
+  .filter-label {
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gray-600); margin-bottom: 12px;
+  }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 6px 14px; border-radius: 50px;
+    border: 1.5px solid var(--gray-200); font-size: 0.85rem;
+    color: var(--gray-600); cursor: pointer;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    background: white;
+  }
+  .chip:hover, .chip.active {
+    border-color: var(--teal); color: var(--teal);
+    background: rgba(13,148,136,0.06);
+  }
+  .price-range { padding: 8px 0; }
+  .range-input {
+    width: 100%; -webkit-appearance: none;
+    height: 4px; background: linear-gradient(to right, var(--teal) 60%, var(--gray-200) 60%);
+    border-radius: 4px; outline: none; cursor: pointer;
+  }
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    border-radius: 50%; background: var(--teal);
+    border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .range-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.85rem; color: var(--gray-600); }
+  .btn-apply {
+    width: 100%; background: var(--navy); color: white;
+    border: none; padding: 12px; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    margin-top: 8px; transition: all 0.2s;
+  }
+  .btn-apply:hover { background: var(--navy-mid); }
+
+  /* PROPERTY CARDS */
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .property-card {
+    background: white; border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: all 0.3s; cursor: pointer;
+    border: 1px solid var(--gray-200);
+  }
+  .property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .card-img {
+    height: 210px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .card-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--navy); color: white;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .card-badge.new { background: var(--teal); }
+  .card-badge.hot { background: #ef4444; }
+  .card-fav {
+    position: absolute; top: 12px; right: 12px;
+    background: white; border: none; width: 34px; height: 34px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: var(--shadow-sm);
+    font-size: 1rem; transition: all 0.2s;
+  }
+  .card-fav:hover { transform: scale(1.1); }
+  .card-body { padding: 18px; }
+  .card-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .card-price span { font-size: 0.9rem; font-weight: 400; color: var(--gray-500); }
+  .card-address {
+    font-size: 0.9rem; color: var(--gray-600); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .card-details {
+    display: flex; gap: 16px;
+    padding-top: 14px; border-top: 1px solid var(--gray-100);
+  }
+  .detail-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.85rem; color: var(--gray-600);
+  }
+  .detail-item strong { color: var(--gray-800); font-weight: 600; }
+
+  /* PROPERTY DETAIL */
+  .detail-section { background: white; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
+  .gallery {
+    border-radius: var(--radius); overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 280px 180px;
+    gap: 8px;
+  }
+  .gallery-main {
+    grid-column: 1 / -1; grid-row: 1;
+    background: linear-gradient(135deg, #dbeafe, #93c5fd);
+    position: relative; overflow: hidden; border-radius: 12px 12px 0 0;
+  }
+  .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb {
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    border-radius: 0; overflow: hidden; position: relative;
+  }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb:last-child { border-radius: 0 0 12px 0; }
+  .gallery-thumb:nth-child(2) { border-radius: 0 0 0 12px; }
+
+  .detail-info { margin-top: 28px; }
+  .detail-price-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .detail-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--navy);
+  }
+  .detail-status {
+    background: rgba(13,148,136,0.1); color: var(--teal);
+    padding: 6px 14px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 600;
+  }
+  .detail-specs { display: flex; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .spec-item {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--gray-50); padding: 14px 20px;
+    border-radius: 10px; text-align: center;
+  }
+  .spec-val { font-size: 1.3rem; font-weight: 700; color: var(--navy); font-family: 'Playfair Display', serif; }
+  .spec-label { font-size: 0.78rem; color: var(--gray-500); margin-top: 2px; }
+  .detail-desc {
+    color: var(--gray-600); line-height: 1.8; font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+  .amenities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 28px; }
+  .amenity {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.88rem; color: var(--gray-700);
+  }
+  .amenity-icon { color: var(--teal); font-size: 1rem; }
+
+  /* SIDEBAR CARD */
+  .sidebar-card {
+    background: white; border-radius: var(--radius);
+    border: 1px solid var(--gray-200); padding: 24px;
+    position: sticky; top: 90px; box-shadow: var(--shadow-sm);
+  }
+  .mortgage-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; color: var(--navy); margin-bottom: 20px;
+  }
+  .input-group { margin-bottom: 16px; }
+  .input-label { font-size: 0.82rem; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; display: block; }
+  .input-field {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--gray-200); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    color: var(--gray-800); outline: none; transition: border 0.2s;
+  }
+  .input-field:focus { border-color: var(--teal); }
+  .mortgage-result {
+    background: var(--navy); color: white;
+    border-radius: 10px; padding: 16px; text-align: center; margin: 16px 0;
+  }
+  .mortgage-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+  }
+  .mortgage-label { font-size: 0.8rem; opacity: 0.7; margin-top: 2px; }
+  .btn-tour {
+    width: 100%; background: var(--teal); color: white;
+    border: none; padding: 13px; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    margin-top: 12px; transition: all 0.2s;
+  }
+  .btn-tour:hover { background: #0c8278; }
+
+  /* AGENT SECTION */
+  .agents-section { background: var(--cream); }
+  .agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  .agent-card {
+    background: white; border-radius: var(--radius);
+    padding: 28px 24px; text-align: center;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+    transition: all 0.3s;
+  }
+  .agent-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .agent-avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    margin: 0 auto 16px;
+    border: 3px solid var(--teal-light);
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 2rem; font-family: 'Playfair Display', serif;
+  }
+  .agent-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--navy); margin-bottom: 4px;
+  }
+  .agent-title { font-size: 0.85rem; color: var(--teal); margin-bottom: 10px; font-weight: 500; }
+  .agent-stats { display: flex; justify-content: center; gap: 24px; margin: 16px 0; }
+  .agent-stat { text-align: center; }
+  .agent-stat-num { font-weight: 700; font-size: 1rem; color: var(--navy); }
+  .agent-stat-label { font-size: 0.75rem; color: var(--gray-500); }
+  .agent-rating { display: flex; justify-content: center; align-items: center; gap: 4px; font-size: 0.85rem; margin-bottom: 16px; }
+  .stars { color: var(--gold); }
+  .btn-agent {
+    width: 100%; background: none; border: 1.5px solid var(--navy);
+    color: var(--navy); padding: 9px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-agent:hover { background: var(--navy); color: white; }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: white;
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 16px;
+  }
+  .contact-sub { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 32px; }
+  .contact-feature { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(13,148,136,0.2); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.1rem;
+  }
+  .feature-text { font-size: 0.95rem; color: rgba(255,255,255,0.85); }
+  .contact-form {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius); padding: 36px;
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 24px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-bottom: 6px; display: block; }
+  .form-input {
+    width: 100%; padding: 11px 14px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; color: white;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border 0.2s;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.3); }
+  .form-input:focus { border-color: var(--teal-light); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .btn-form {
+    width: 100%; background: var(--teal); color: white;
+    border: none; padding: 13px; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; margin-top: 4px;
+  }
+  .btn-form:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* MAP MOCK */
+  .map-container {
+    background: linear-gradient(135deg, #e0f2fe, #bfdbfe);
+    border-radius: var(--radius); height: 400px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; margin-bottom: 32px;
+  }
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .map-roads {
+    position: absolute; inset: 0;
+  }
+  .map-pin {
+    position: absolute; background: var(--navy);
+    color: white; padding: 5px 10px; border-radius: 8px;
+    font-size: 0.82rem; font-weight: 600;
+    box-shadow: var(--shadow-md);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .map-pin::after {
+    content: '';
+    position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--navy);
+    border-bottom: none;
+  }
+  .map-pin:hover { background: var(--teal); transform: translateY(-2px); }
+  .map-pin:hover::after { border-top-color: var(--teal); }
+  .map-pin.featured { background: var(--teal); }
+  .map-pin.featured::after { border-top-color: var(--teal); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.7);
+    padding: 60px 5% 30px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 14px;
+  }
+  .footer-logo span { color: var(--teal-light); }
+  .footer-about { font-size: 0.88rem; line-height: 1.8; max-width: 280px; }
+  .footer-col h4 {
+    color: white; font-size: 0.88rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; text-decoration: none;
+    color: rgba(255,255,255,0.6); font-size: 0.88rem;
+    margin-bottom: 10px; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--teal-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px; display: flex;
+    justify-content: space-between; align-items: center;
+    font-size: 0.84rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* MAP ROADS SVG paths */
+  svg.roads {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.4;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .listings-layout { grid-template-columns: 1fr; }
+    .filter-panel { position: static; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 24px; }
+    .search-container { flex-direction: column; }
+    .listings-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* Section dividers */
+  .divider {
+    height: 1px; background: var(--gray-200); margin: 0 5%;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Nest<span>ara</span></a>
+  <div class="nav-links">
+    <a href="#listings">Buy</a>
+    <a href="#listings">Rent</a>
+    <a href="#">Sell</a>
+    <a href="#agents">Agents</a>
+    <a href="#">Blog</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-ghost">Log In</button>
+    <button class="btn-primary">Sign Up</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-circles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🏆 #1 Rated Real Estate Platform 2024</div>
+    <h1 class="hero-title">
+      Find Your <span>Dream Home</span><br>In the Perfect Neighborhood
+    </h1>
+    <p class="hero-sub">Search over 2 million homes for sale and rent across the country. Smart filters, real-time data, and expert agents at your fingertips.</p>
+
+    <div class="search-container">
+      <div class="search-tabs" style="display:flex;">
+        <button class="search-tab active" onclick="setTab(this)">Buy</button>
+        <button class="search-tab" onclick="setTab(this)">Rent</button>
+        <button class="search-tab" onclick="setTab(this)">Sell</button>
+        <button class="search-tab" onclick="setTab(this)">Estimate</button>
+      </div>
+      <div class="search-input-wrap" style="flex:2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="City, neighborhood, ZIP, or address...">
+      </div>
+      <select class="search-select">
+        <option>Any Price</option>
+        <option>Under $300K</option>
+        <option>$300K–$600K</option>
+        <option>$600K–$1M</option>
+        <option>$1M+</option>
+      </select>
+      <select class="search-select">
+        <option>Any Beds</option>
+        <option>1+ Beds</option>
+        <option>2+ Beds</option>
+        <option>3+ Beds</option>
+        <option>4+ Beds</option>
+      </select>
+      <button class="btn-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">2.4M+</div><div class="stat-label">Active Listings</div></div>
+      <div class="stat"><div class="stat-num">98K+</div><div class="stat-label">Verified Agents</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+      <div class="stat"><div class="stat-num">850K+</div><div class="stat-label">Happy Buyers</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section id="map" style="padding: 60px 5% 0; background: var(--gray-50);">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div class="section-eyebrow">Interactive Map</div>
+    <h2 class="section-title">Explore Properties Near You</h2>
+  </div>
+  <div class="map-container">
+    <div class="map-grid"></div>
+    <svg class="roads" viewBox="0 0 800 400" preserveAspectRatio="none">
+      <path d="M0 200 Q 200 180 400 200 T 800 200" stroke="rgba(255,255,255,0.7)" stroke-width="20" fill="none"/>
+      <path d="M0 300 Q 100 280 300 300 T 600 290 L 800 310" stroke="rgba(255,255,255,0.5)" stroke-width="12" fill="none"/>
+      <path d="M200 0 Q 220 100 200 200 T 210 400" stroke="rgba(255,255,255,0.6)" stroke-width="16" fill="none"/>
+      <path d="M550 0 Q 560 150 550 250 T 545 400" stroke="rgba(255,255,255,0.4)" stroke-width="10" fill="none"/>
+      <path d="M0 100 Q 150 90 300 100" stroke="rgba(255,255,255,0.3)" stroke-width="8" fill="none"/>
+    </svg>
+    <!-- Price pins -->
+    <div class="map-pin featured" style="left:20%; top:35%">$524K</div>
+    <div class="map-pin" style="left:38%; top:55%">$389K</div>
+    <div class="map-pin" style="left:55%; top:28%">$712K</div>
+    <div class="map-pin" style="left:67%; top:62%">$445K</div>
+    <div class="map-pin" style="left:80%; top:40%">$893K</div>
+    <div class="map-pin" style="left:10%; top:70%">$298K</div>
+    <div class="map-pin" style="left:45%; top:18%">$1.1M</div>
+    <div class="map-pin" style="left:73%; top:75%">$567K</div>
+  </div>
+</section>
+
+<!-- LISTINGS SECTION -->
+<section id="listings" class="listings-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Featured Properties</div>
+    <h2 class="section-title">Homes You'll Love</h2>
+    <p class="section-sub">Curated listings from verified sellers with detailed photos, virtual tours, and instant information.</p>
+  </div>
+
+  <div class="listings-layout">
+    <!-- FILTER PANEL -->
+    <aside class="filter-panel">
+      <div class="filter-title">
+        Filters <button>Reset All</button>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Property Type</div>
+        <div class="filter-chips">
+          <button class="chip active">All</button>
+          <button class="chip">House</button>
+          <button class="chip">Condo</button>
+          <button class="chip">Townhouse</button>
+          <button class="chip">Multi-Family</button>
+          <button class="chip">Land</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Price Range</div>
+        <div class="price-range">
+          <input type="range" class="range-input" min="0" max="100" value="60" oninput="updatePrice(this)">
+          <div class="range-labels">
+            <span>$0</span>
+            <span id="price-val">$1.2M</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Bedrooms</div>
+        <div class="filter-chips">
+          <button class="chip">Any</button>
+          <button class="chip active">1+</button>
+          <button class="chip">2+</button>
+          <button class="chip">3+</button>
+          <button class="chip">4+</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Bathrooms</div>
+        <div class="filter-chips">
+          <button class="chip">Any</button>
+          <button class="chip">1+</button>
+          <button class="chip active">2+</button>
+          <button class="chip">3+</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Listing Status</div>
+        <div class="filter-chips">
+          <button class="chip active">For Sale</button>
+          <button class="chip">For Rent</button>
+          <button class="chip">New Build</button>
+          <button class="chip">Foreclosure</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">More Options</div>
+        <div class="filter-chips">
+          <button class="chip">Garage</button>
+          <button class="chip active">Pool</button>
+          <button class="chip">Waterfront</button>
+          <button class="chip">Pet Friendly</button>
+          <button class="chip">Garden</button>
+        </div>
+      </div>
+
+      <button class="btn-apply">Apply Filters</button>
+    </aside>
+
+    <!-- PROPERTY CARDS -->
+    <div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+        <p style="font-size:0.9rem; color:var(--gray-600)"><strong style="color:var(--navy)">2,847</strong> homes found</p>
+        <select class="search-select">
+          <option>Sort: Recommended</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest First</option>
+          <option>Most Popular</option>
+        </select>
+      </div>
+
+      <div class="listings-grid">
+        <!-- Card 1 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge new">New</span>
+            <button class="card-fav">♡</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$524,000</div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              2847 Maple Grove Dr, Austin, TX
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>4</strong> Beds</div>
+              <div class="detail-item"><strong>3</strong> Baths</div>
+              <div class="detail-item"><strong>2,340</strong> sqft</div>
+              <div class="detail-item"><strong>0.3</strong> acres</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge hot">Hot</span>
+            <button class="card-fav">♡</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$712,000</div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              45 Sunridge Blvd, Denver, CO
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>5</strong> Beds</div>
+              <div class="detail-item"><strong>4</strong> Baths</div>
+              <div class="detail-item"><strong>3,100</strong> sqft</div>
+              <div class="detail-item"><strong>0.5</strong> acres</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge">For Sale</span>
+            <button class="card-fav">❤️</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$389,500</div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              112 Elm Street, Nashville, TN
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>3</strong> Beds</div>
+              <div class="detail-item"><strong>2</strong> Baths</div>
+              <div class="detail-item"><strong>1,750</strong> sqft</div>
+              <div class="detail-item"><strong>0.2</strong> acres</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge new">New</span>
+            <button class="card-fav">♡</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$893,000 <span>/mo est. $5,200</span></div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              9 Coastal View, Miami, FL
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>6</strong> Beds</div>
+              <div class="detail-item"><strong>5</strong> Baths</div>
+              <div class="detail-item"><strong>4,200</strong> sqft</div>
+              <div class="detail-item"><strong>Pool</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge">For Sale</span>
+            <button class="card-fav">♡</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$445,000</div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              330 Willow Creek, Seattle, WA
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>3</strong> Beds</div>
+              <div class="detail-item"><strong>2.5</strong> Baths</div>
+              <div class="detail-item"><strong>2,010</strong> sqft</div>
+              <div class="detail-item"><strong>Garage</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="property-card fade-up" onclick="showDetail()">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&q=80" alt="Property" loading="lazy">
+            <span class="card-badge hot">Hot</span>
+            <button class="card-fav">♡</button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">$1,100,000</div>
+            <div class="card-address">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              88 Prestige Lane, Scottsdale, AZ
+            </div>
+            <div class="card-details">
+              <div class="detail-item"><strong>7</strong> Beds</div>
+              <div class="detail-item"><strong>6</strong> Baths</div>
+              <div class="detail-item"><strong>5,800</strong> sqft</div>
+              <div class="detail-item"><strong>Luxury</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:36px;">
+        <button class="btn-ghost" style="padding: 13px 40px; font-size:0.95rem;">Load More Properties</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTY DETAIL -->
+<section id="detail" class="detail-section" style="display:none;">
+  <div style="margin-bottom: 24px;">
+    <button onclick="hideDetail()" style="background:none; border:none; color:var(--teal); cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.9rem; display:flex; align-items:center; gap:6px;">
+      ← Back to Listings
+    </button>
+  </div>
+
+  <div class="detail-grid">
+    <div>
+      <div class="gallery">
+        <div class="gallery-main">
+          <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=80" alt="Main view">
+        </div>
+        <div class="gallery-thumb">
+          <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=400&q=80" alt="Kitchen">
+        </div>
+        <div class="gallery-thumb">
+          <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400&q=80" alt="Living room">
+        </div>
+      </div>
+
+      <div class="detail-info">
+        <div class="detail-price-row">
+          <div class="detail-price">$524,000</div>
+          <span class="detail-status">✓ Active Listing</span>
+        </div>
+
+        <h2 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--navy); margin-bottom:8px;">2847 Maple Grove Drive</h2>
+        <p style="color:var(--gray-600); margin-bottom:20px; display:flex; align-items:center; gap:4px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Austin, TX 78750 — Travis County
+        </p>
+
+        <div class="detail-specs">
+          <div class="spec-item"><div class="spec-val">4</div><div class="spec-label">Bedrooms</div></div>
+          <div class="spec-item"><div class="spec-val">3</div><div class="spec-label">Bathrooms</div></div>
+          <div class="spec-item"><div class="spec-val">2,340</div><div class="spec-label">Sq Ft</div></div>
+          <div class="spec-item"><div class="spec-val">0.3</div><div class="spec-label">Acres</div></div>
+          <div class="spec-item"><div class="spec-val">2018</div><div class="spec-label">Year Built</div></div>
+        </div>
+
+        <p class="detail-desc">
+          Welcome to this stunning modern farmhouse nestled in the heart of Austin's most sought-after neighborhood. This meticulously maintained home features soaring ceilings, an open-concept floor plan, and premium finishes throughout. The gourmet kitchen boasts quartz countertops, professional-grade appliances, and a large island perfect for entertaining. The primary suite offers a spa-like retreat with a walk-in closet and luxurious bath.
+        </p>
+
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--navy); margin-bottom:16px;">Amenities & Features</h3>
+        <div class="amenities-grid">
+          <div class="amenity"><span class="amenity-icon">✓</span> Gourmet Kitchen</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Hardwood Floors</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Smart Home System</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> 2-Car Garage</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> In-Ground Pool</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Solar Panels</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Walk-in Closets</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Central A/C</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Fireplace</div>
+          <div class="amenity"><span class="amenity-icon">✓</span> Private Backyard</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sidebar-card">
+        <h3 class="mortgage-title">💰 Mortgage Calculator</h3>
+
+        <div class="input-group">
+          <label class="input-label">Home Price</label>
+          <input class="input-field" type="text" value="$524,000" oninput="calcMortgage()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Down Payment</label>
+          <input class="input-field" type="text" value="$104,800 (20%)" oninput="calcMortgage()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Loan Term</label>
+          <select class="input-field">
+            <option>30 Year Fixed</option>
+            <option>15 Year Fixed</option>
+            <option>5/1 ARM</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Interest Rate (%)</label>
+          <input class="input-field" id="rate-input" type="text" value="6.75%" oninput="calcMortgage()">
+        </div>
+
+        <div class="mortgage-result">
+          <div class="mortgage-amount" id="monthly-payment">$2,718<span style="font-size:1rem;">/mo</span></div>
+          <div class="mortgage-label">Estimated Monthly Payment</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+          <div style="background:var(--gray-50); padding:12px; border-radius:8px; text-align:center;">
+            <div style="font-size:1rem; font-weight:700; color:var(--navy)">$419,200</div>
+            <div style="font-size:0.75rem; color:var(--gray-500)">Loan Amount</div>
+          </div>
+          <div style="background:var(--gray-50); padding:12px; border-radius:8px; text-align:center;">
+            <div style="font-size:1rem; font-weight:700; color:var(--navy)">6.75%</div>
+            <div style="font-size:0.75rem; color:var(--gray-500)">Interest Rate</div>
+          </div>
+        </div>
+
+        <button class="btn-tour">📅 Schedule a Tour</button>
+        <button style="width:100%; margin-top:10px; background:none; border:1.5px solid var(--teal); color:var(--teal); padding:12px; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer;">💬 Ask a Question</button>
+
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--gray-200);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, var(--teal), var(--navy)); display:flex; align-items:center; justify-content:center; color:white; font-family:'Playfair Display',serif; font-weight:700; flex-shrink:0;">S</div>
+            <div>
+              <div style="font-weight:600; color:var(--navy); font-size:0.95rem;">Sarah Mitchell</div>
+              <div style="font-size:0.8rem; color:var(--teal);">Listing Agent</div>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--gray-600); margin-top:10px;">📞 (512) 847-3921 &nbsp;·&nbsp; ✉️ sarah@nestara.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS SECTION -->
+<section id="agents" class="agents-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Our Experts</div>
+    <h2 class="section-title">Meet Top-Rated Agents</h2>
+    <p class="section-sub">Work with the best. Our verified agents are local experts with proven track records and thousands of happy clients.</p>
+  </div>
+
+  <div class="agents-grid">
+    <div class="agent-card fade-up">
+      <div class="agent-avatar">S</div>
+      <div class="agent-name">Sarah Mitchell</div>
+      <div class="agent-title">Senior Listing Agent</div>
+      <div class="agent-rating"><span class="stars">★★★★★</span> <span style="color:var(--gray-600)">4.98 (312 reviews)</span></div>
+      <div class="agent-stats">
+        <div class="agent-stat"><div class="agent-stat-num">247</div><div class="agent-stat-label">Sold</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">12yr</div><div class="agent-stat-label">Experience</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">Austin</div><div class="agent-stat-label">Market</div></div>
+      </div>
+      <button class="btn-agent">View Profile</button>
+    </div>
+
+    <div class="agent-card fade-up">
+      <div class="agent-avatar">M</div>
+      <div class="agent-name">Marcus Chen</div>
+      <div class="agent-title">Luxury Property Specialist</div>
+      <div class="agent-rating"><span class="stars">★★★★★</span> <span style="color:var(--gray-600)">4.95 (198 reviews)</span></div>
+      <div class="agent-stats">
+        <div class="agent-stat"><div class="agent-stat-num">183</div><div class="agent-stat-label">Sold</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">9yr</div><div class="agent-stat-label">Experience</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">Denver</div><div class="agent-stat-label">Market</div></div>
+      </div>
+      <button class="btn-agent">View Profile</button>
+    </div>
+
+    <div class="agent-card fade-up">
+      <div class="agent-avatar">A</div>
+      <div class="agent-name">Aisha Patel</div>
+      <div class="agent-title">First-Time Buyer Expert</div>
+      <div class="agent-rating"><span class="stars">★★★★★</span> <span style="color:var(--gray-600)">4.97 (276 reviews)</span></div>
+      <div class="agent-stats">
+        <div class="agent-stat"><div class="agent-stat-num">319</div><div class="agent-stat-label">Sold</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">15yr</div><div class="agent-stat-label">Experience</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">Miami</div><div class="agent-stat-label">Market</div></div>
+      </div>
+      <button class="btn-agent">View Profile</button>
+    </div>
+
+    <div class="agent-card fade-up">
+      <div class="agent-avatar">J</div>
+      <div class="agent-name">James Rodriguez</div>
+      <div class="agent-title">Investment Property Expert</div>
+      <div class="agent-rating"><span class="stars">★★★★☆</span> <span style="color:var(--gray-600)">4.88 (142 reviews)</span></div>
+      <div class="agent-stats">
+        <div class="agent-stat"><div class="agent-stat-num">156</div><div class="agent-stat-label">Sold</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">7yr</div><div class="agent-stat-label">Experience</div></div>
+        <div class="agent-stat"><div class="agent-stat-num">Seattle</div><div class="agent-stat-label">Market</div></div>
+      </div>
+      <button class="btn-agent">View Profile</button>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:40px;">
+    <button class="btn-primary" style="padding:13px 40px; font-size:0.95rem;">Browse All Agents</button>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="contact-section">
+  <div class="contact-grid">
+    <div>
+      <div style="font-size:0.8rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal-light); margin-bottom:12px;">Get In Touch</div>
+      <h2 class="contact-title">Ready to Find<br>Your Next Home?</h2>
+      <p class="contact-sub">Our expert team is here to guide you through every step of your real estate journey, from search to close.</p>
+
+      <div class="contact-feature">
+        <div class="feature-icon">🏠</div>
+        <div class="feature-text">Personalized property recommendations tailored to your lifestyle and budget</div>
+      </div>
+      <div class="contact-feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">Comprehensive market analysis and valuation reports for informed decisions</div>
+      </div>
+      <div class="contact-feature">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-text">Dedicated agent support from initial search through closing day</div>
+      </div>
+      <div class="contact-feature">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-text">Fast response times — hear back from us within 2 hours</div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h3 class="form-title">Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input class="form-input" type="text" placeholder="Doe">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="john@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input class="form-input" type="tel" placeholder="+1 (555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">I'm Interested In</label>
+        <select class="form-input">
+          <option>Buying a Home</option>
+          <option>Selling My Home</option>
+          <option>Renting</option>
+          <option>Property Management</option>
+          <option>Investment Properties</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-input form-textarea" placeholder="Tell us about your ideal home or any questions you have..."></textarea>
+      </div>
+      <button class="btn-form">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Nest<span>ara</span></div>
+      <p class="footer-about">The trusted platform for buying, selling, and renting homes across America. Connecting millions of buyers and sellers with expert agents since 2014.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#">Homes for Sale</a>
+      <a href="#">Homes for Rent</a>
+      <a href="#">New Construction</a>
+      <a href="#">Foreclosures</a>
+      <a href="#">Open Houses</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Mortgage Calculator</a>
+      <a href="#">Home Value Estimator</a>
+      <a href="#">Market Trends</a>
+      <a href="#">Buyer's Guide</a>
+      <a href="#">Seller's Guide</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Nestara Inc. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.4);">Built with ❤️ for homebuyers everywhere</span>
+  </div>
+</footer>
+
+<script>
+  // Tab switching
+  function setTab(el) {
+    document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Price range
+  function updatePrice(input) {
+    const max = 2000000;
+    const val = (input.value / 100 * max);
+    document.getElementById('price-val').textContent = val >= 1000000
+      ? '$' + (val/1000000).toFixed(1) + 'M'
+      : '$' + Math.round(val/1000) + 'K';
+  }
+
+  // Mortgage calculator
+  function calcMortgage() {
+    document.getElementById('monthly-payment').innerHTML = '$2,718<span style="font-size:1rem;">/mo</span>';
+  }
+
+  // Show/hide detail
+  function showDetail() {
+    document.getElementById('listings').style.display = 'none';
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('detail').style.display = 'block';
+    window.scrollTo({ top: 68, behavior: 'smooth' });
+  }
+
+  function hideDetail() {
+    document.getElementById('detail').style.display = 'none';
+    document.getElementById('listings').style.display = 'block';
+    document.getElementById('map').style.display = 'block';
+    window.scrollTo({ top: 68, behavior: 'smooth' });
+  }
+
+  // Chip toggle
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const group = this.closest('.filter-chips');
+      group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Favorite toggle
+  document.querySelectorAll('.card-fav').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.textContent = this.textContent === '♡' ? '❤️' : '♡';
+    });
+  });
+
+  // Scroll fade-up animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
